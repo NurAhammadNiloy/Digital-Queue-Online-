@@ -35,15 +35,23 @@ export default async function LocationPage({ params, searchParams }: { params: P
       {!location.archived_at && <ConfigPanel key={JSON.stringify(location)} kind="location" location={location} label="Edit location" />}
       <LocationActions location={location} />
     </section>
-    {!location.archived_at && <section className="card break-inside-avoid print:border-0 print:p-0" aria-label="Location QR code">
-      <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center print:items-center print:text-center">
-        <Image src={`/api/manager/locations/${id}/qr`} unoptimized width={160} height={160} alt={`QR code for ${location.name} public queue page`} className="h-40 w-40 shrink-0 rounded-xl border border-slate-200 bg-white p-2 print:h-[520px] print:w-[520px] print:max-h-[70vw] print:max-w-[70vw] print:border-0 print:p-4" />
-        <div className="min-w-0 flex-1 space-y-3 print:flex print:flex-col print:items-center"><h2 className="print:text-3xl">Public queue</h2><p className="hidden print:block print:text-xl print:font-semibold">{location.name}</p><p className="break-all text-sm text-slate-600 print:max-w-xl">{url}</p>
-          {!location.active && <p className="muted">The public queue is unavailable while this location is inactive.</p>}
-          <div className="flex flex-wrap gap-2 print:hidden"><a className="btn" href={url} target="_blank" rel="noreferrer">Open queue page<span className="sr-only"> (new tab)</span></a><CopyButton value={url} /><a className="btn" href={`/api/manager/locations/${id}/qr?download=1`} download>Download</a><PrintButton /></div>
+    {!location.archived_at && <>
+      <section className="card break-inside-avoid print:hidden" aria-label="Location QR code">
+        <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+          <Image src={`/api/manager/locations/${id}/qr`} unoptimized width={160} height={160} alt={`QR code for ${location.name} public queue page`} className="h-40 w-40 shrink-0 rounded-xl border border-slate-200 bg-white p-2" />
+          <div className="min-w-0 flex-1 space-y-3"><h2>Public queue</h2><p className="break-all text-sm text-slate-600">{url}</p>
+            {!location.active && <p className="muted">The public queue is unavailable while this location is inactive.</p>}
+            <div className="flex flex-wrap gap-2"><a className="btn" href={url} target="_blank" rel="noreferrer">Open queue page<span className="sr-only"> (new tab)</span></a><CopyButton value={url} /><a className="btn" href={`/api/manager/locations/${id}/qr?download=1`} download>Download</a><PrintButton /></div>
+          </div>
         </div>
-      </div>
-    </section>}
+      </section>
+      <section className="hidden print:flex print:min-h-[95vh] print:flex-col print:items-center print:justify-center print:gap-5 print:text-center" aria-label="Printable location QR code">
+        <p className="text-xl font-semibold tracking-tight">Digital Queue</p>
+        <div className="space-y-2"><h1 className="text-4xl">Scan to join the queue</h1><p className="text-2xl font-semibold text-slate-800">{location.name}</p></div>
+        <Image src={`/api/manager/locations/${id}/qr`} unoptimized width={640} height={640} alt={`QR code for ${location.name} public queue page`} className="h-[620px] w-[620px] max-h-[62vh] max-w-[80vw] bg-white p-5" />
+        <p className="max-w-2xl break-all text-base text-slate-600">{url}</p>
+      </section>
+    </>}
     {location.archived_at && <Link className="btn" href={`/manager/analytics?locationId=${id}`}>View historical analytics</Link>}
     <section className="space-y-4 print:hidden" aria-label="Services management"><div><h2>Services</h2><p className="muted mt-1">Manage queue settings and availability for this location.</p></div>
       <LifecycleTabs archived={archivedServices} activeHref={`/manager/locations/${id}`} archivedHref={`/manager/locations/${id}?services=archived`} label="Service views" />
