@@ -1,10 +1,12 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { requirePageSession, sessionCookieName } from "@/lib/auth/session";
 import Link from "next/link";
 import { DashboardLocationFilter } from "@/components/manager/dashboard-location-filter";
 import { LiveDashboardCounts } from "@/components/manager/dashboard-counts";
 import { pageLocation, pageQuery } from "@/lib/manager/location-selection";
-import { dashboard } from "@/lib/manager/administration";
+import { dashboard, locations } from "@/lib/manager/administration";
+import { ConfigPanel } from "@/components/manager/config-panel";
 import { managerAnalytics } from "@/lib/analytics/manager";
 import { counterOperations } from "@/lib/counters/server";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -12,8 +14,27 @@ import { Icon } from "@/components/ui/icon";
 
 export default async function ManagerPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const session = await requirePageSession("manager");
-  const { options, selected } = await pageLocation(session, pageQuery(await searchParams));
-  if (!selected) return <main className="page"><h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1><p>No locations configured. Create a location to view its queue counts.</p><Link href="/manager/locations" className="underline">Manage locations</Link></main>;
+  const query = pageQuery(await searchParams);
+  const { options, selected } = await pageLocation(session, query);
+  if (!selected) {
+    if ((await locations(session, "archived")).length) redirect("/manager/locations?view=archived");
+    return (
+      <main className="page-narrow">
+        <section className="card space-y-5" aria-labelledby="first-location-title">
+          <span className="kpi-icon"><Icon name="location" /></span>
+          <div className="space-y-2">
+            <h1 id="first-location-title">Create your first location</h1>
+            <p className="muted">Add a location to start serving customers with Digital Queue.</p>
+          </div>
+          <ConfigPanel kind="location" label="Create Location" primary />
+        </section>
+      </main>
+    );
+  }
+  if (!query.has("locationId")) {
+    const active = options.filter((location) => location.active);
+    redirect(active.length === 1 ? `/manager/locations/${active[0].id}` : "/manager/locations");
+  }
   const token = (await cookies()).get(sessionCookieName("manager"))!.value;
   const counts = await dashboard(token, selected.id);
   const [analytics, operations] = await Promise.all([
