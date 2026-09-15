@@ -1,0 +1,12 @@
+project_id = "digital-queue-management-system"
+
+[db]
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[auth]
+enable_signup = false
+enable_anonymous_sign_ins = false

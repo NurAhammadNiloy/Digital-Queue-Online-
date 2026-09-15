@@ -1,0 +1,17 @@
+/node_modules/
+/.next/
+/out/
+/coverage/
+/.vercel/
+.env*
+!.env.example
+*.tsbuildinfo
+next-env.d.ts
+*.log
+.DS_Store
+Thumbs.db
+*.pem
+*.key
+/supabase/.temp/
+/supabase/.branches/
+/scripts/bootstrap-manager.local.sql

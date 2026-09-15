@@ -1,0 +1,12 @@
+.env*
+.git/
+.next/
+node_modules/
+tests/
+supabase/
+*.log
+*.tsbuildinfo
+scripts/setup-local.mjs
+scripts/hash-pin.mjs
+scripts/bootstrap-manager.sql
+scripts/bootstrap-manager.local.sql

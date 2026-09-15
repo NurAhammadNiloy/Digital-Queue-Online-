@@ -1,0 +1,52 @@
+{
+  "name": "digital-queue-management-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "check:production": "node scripts/check-production-env.mjs",
+    "build:vercel": "npm run check:production && npm run build",
+    "start": "next start",
+    "local:setup": "node --conditions=react-server scripts/setup-local.mjs",
+    "test:diagnostics": "node --test tests/development-error.test.mjs",
+    "test:browser-session": "node --conditions=react-server --test tests/browser-session.test.mjs",
+    "test:locations": "node --conditions=react-server --test tests/location-isolation.test.mjs",
+    "test:realtime": "node --conditions=react-server --test tests/realtime.test.mjs tests/live-updates.test.mjs",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "test:auth": "node --conditions=react-server --test tests/auth.test.mjs",
+    "test:staff": "node --conditions=react-server --test tests/staff-management.test.mjs",
+    "test:serving": "node --conditions=react-server --test tests/staff-serving.test.mjs",
+    "test:acceptance": "node --conditions=react-server --test tests/lifecycle-acceptance.test.mjs",
+    "test:customer": "node --conditions=react-server --test tests/customer-flow.test.mjs",
+    "test:eta": "node --conditions=react-server --test tests/queue-estimate.test.mjs",
+    "test:manager": "node --conditions=react-server --test tests/manager-core.test.mjs",
+    "test:analytics": "node --conditions=react-server --test tests/manager-analytics.test.mjs",
+    "test:db": "python supabase/tests/database_test.py"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.116.0",
+    "next": "16.3.4",
+    "qr": "0.7.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.13.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.4",
+    "postcss": "8.5.28",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}
