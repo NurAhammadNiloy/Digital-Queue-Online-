@@ -3,7 +3,7 @@
 .next/
 node_modules/
 tests/
-supabase/
+/supabase/
 *.log
 *.tsbuildinfo
 scripts/setup-local.mjs
