@@ -27,7 +27,7 @@ export function LoginForm({ role }: Props) {
     <div className="login-background"><main className="mx-auto w-full max-w-md px-4 py-12 sm:py-20">
       <div className="brand mb-8 justify-center"><span className="brand-mark"><Icon name="queue" /></span>Digital Queue</div>
       <div className="card space-y-6">
-      <header className="space-y-2"><h1>{role === "staff" ? "Staff" : "Manager"} login</h1><p className="muted">{role === "staff" ? "Sign in to serve your assigned queues." : "Sign in to manage your locations and team."}</p></header>
+      <header className="space-y-2"><h1>{role === "staff" ? "Staff" : "Management"} login</h1><p className="muted">{role === "staff" ? "Sign in to serve your assigned queues." : "Sign in to manage your organization and locations."}</p></header>
       <form action={`/api/auth/${role}/login`} method="post" onSubmit={submit} aria-busy={pending} className="space-y-5">
         <label className="block">
           {role === "staff" ? "Staff ID" : "Email"}

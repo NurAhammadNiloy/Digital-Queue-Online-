@@ -19,12 +19,12 @@ export default function Home() {
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <section aria-labelledby="manager-title" className="card flex flex-col">
             <span className="kpi-icon mb-5"><Icon name="shield" /></span>
-            <h2 id="manager-title" className="text-2xl">Manager</h2>
+            <h2 id="manager-title" className="text-2xl">Management</h2>
             <p className="muted mt-2 mb-6 flex-1">
-              Manage locations, services, staff and analytics
+              Organization administration and location management
             </p>
             <Link href="/manager/login" className="btn btn-primary w-full">
-              Manager Login <Icon name="arrow" />
+              Management Login <Icon name="arrow" />
             </Link>
           </section>
 
