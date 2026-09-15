@@ -35,10 +35,10 @@ export default async function LocationPage({ params, searchParams }: { params: P
       {!location.archived_at && <ConfigPanel key={JSON.stringify(location)} kind="location" location={location} label="Edit location" />}
       <LocationActions location={location} />
     </section>
-    {!location.archived_at && <section className="card break-inside-avoid" aria-label="Location QR code">
-      <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-        <Image src={`/api/manager/locations/${id}/qr`} unoptimized width={160} height={160} alt={`QR code for ${location.name} public queue page`} className="h-40 w-40 shrink-0 rounded-xl border border-slate-200 bg-white p-2" />
-        <div className="min-w-0 flex-1 space-y-3"><h2>Public queue</h2><p className="hidden print:block">{location.name}</p><p className="break-all text-sm text-slate-600">{url}</p>
+    {!location.archived_at && <section className="card break-inside-avoid print:border-0 print:p-0" aria-label="Location QR code">
+      <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center print:items-center print:text-center">
+        <Image src={`/api/manager/locations/${id}/qr`} unoptimized width={160} height={160} alt={`QR code for ${location.name} public queue page`} className="h-40 w-40 shrink-0 rounded-xl border border-slate-200 bg-white p-2 print:h-[520px] print:w-[520px] print:max-h-[70vw] print:max-w-[70vw] print:border-0 print:p-4" />
+        <div className="min-w-0 flex-1 space-y-3 print:flex print:flex-col print:items-center"><h2 className="print:text-3xl">Public queue</h2><p className="hidden print:block print:text-xl print:font-semibold">{location.name}</p><p className="break-all text-sm text-slate-600 print:max-w-xl">{url}</p>
           {!location.active && <p className="muted">The public queue is unavailable while this location is inactive.</p>}
           <div className="flex flex-wrap gap-2 print:hidden"><a className="btn" href={url} target="_blank" rel="noreferrer">Open queue page<span className="sr-only"> (new tab)</span></a><CopyButton value={url} /><a className="btn" href={`/api/manager/locations/${id}/qr?download=1`} download>Download</a><PrintButton /></div>
         </div>
